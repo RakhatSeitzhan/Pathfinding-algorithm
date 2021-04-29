@@ -1,10 +1,19 @@
 import {Plane} from "./Plane.js"
-import {PathFinder1} from "./PathFinder1.js"
+import {aStar} from "./Algorithms/A*.js"
+import {BFS} from "./Algorithms/BFS.js"
+import {generateMaze} from "./MazeGenerator.js"
+
+////////// include functions such as createWall into plane class
+// make the same with grid if possible
 
 const plane = new Plane(document.body,20,20)
 const switchButton = document.getElementById('switch-button')
 const restartButton = document.getElementById('restart-button')
 const noPathText = document.getElementById('no-path-text')
+const algorithmSelecter = document.getElementById('algorithm-selecter')
+const mazeGeneratorButton = document.getElementById('maze-generator-button')
+
+let pathFinder = aStar
 let path = []
 let checkedGrids = []
 
@@ -15,6 +24,21 @@ let mode = 'walls'
 export function update(){
     updateGirds()
 } 
+
+function changeAlgorithm(name){
+    if (name == 'A*') pathFinder = aStar
+    else if (name == 'BFS') pathFinder = BFS
+}
+
+function setUpMaze(){
+    restart()
+    plane.walls = generateMaze(plane)
+    plane.walls.forEach(item =>{
+        item.isWall = true
+        item.element.classList = 'grid wall'
+    })
+}
+
 let chGrIndex = 0
 let pathIndex = 0
 function updateGirds(){
@@ -41,6 +65,7 @@ function restart(){
         })
     })
 }
+
 
 function resetTarget(){
     stopChange()
@@ -70,7 +95,7 @@ function resetGridsClasses(){
 }
 function updatePath(){
     noPathText.style.display = 'none'
-    const o = PathFinder1(plane)
+    const o = pathFinder(plane)
     checkedGrids = o[0]
     path = o[1]
     if(o[1].length == 0) noPathText.style.display = 'inline'
@@ -107,6 +132,10 @@ function setStartAndTarget(grid){
 }
 
 //////////// EVENT LISTENERS //////////////
+
+algorithmSelecter.onchange = function(){changeAlgorithm(algorithmSelecter.value)}
+
+mazeGeneratorButton.onclick = function(){setUpMaze()}
 
 plane.element.addEventListener('mousedown', e=>{
     if(mode == 'walls'){

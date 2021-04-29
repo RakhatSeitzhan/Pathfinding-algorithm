@@ -20,4 +20,10 @@ export class Plane{
         }
         parent.appendChild(this.element)
     }
+    createWall(y,x){
+        this.matrix[y][x].isWall = true
+        this.matrix[y][x]= true
+        this.matrix[y][x].element.classList = 'grid wall'
+        this.walls.push(matrix[y][x])
+    }
 }

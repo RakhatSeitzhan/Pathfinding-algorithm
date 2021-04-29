@@ -11,12 +11,19 @@ body{
     font-family: 'Open Sans', sans-serif;
 }
 .plane{
+    margin: 0;
+    padding: 0;
     width: 90vmin;
     height: 90vmin;
     background-color: rgb(195, 241, 158);
     display: grid;
 }
-#switch-button,#restart-button{
+.grid{
+    transition: all 0.5s;
+    margin: 0;
+    padding: 0;
+}
+#switch-button,#restart-button, #algorithm-selecter, #maze-generator-button{
     transition: all 0.1s;
     font-size: 4vmin;
     margin-bottom: 1vmin;
@@ -26,7 +33,7 @@ body{
     border-radius: 1.5vmin;
     outline: none;
 }
-#switch-button:hover,#restart-button:hover{
+#switch-button:hover,#restart-button:hover, #maze-generator-button:hover{
     background-color: rgb(245, 255, 236);
     color: rgb(79, 149, 21);
 }
@@ -41,9 +48,7 @@ body{
     border: 0.5vmin solid rgb(182, 87, 87);
     border-radius: 1.5vmin;
 }
-.grid{
-    transition: all 0.5s;
-}
+
 #target-grid{
     background-color: rgb(228, 99, 99);
     animation: none;
